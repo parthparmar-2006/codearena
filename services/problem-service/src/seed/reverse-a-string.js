@@ -18,7 +18,7 @@ A single line with the string **s**. It contains no spaces.
 Print **s** with its characters in reverse order.
 
 ### Constraints
-- 1 ≤ |s| ≤ 10^5
+- 1 ≤ |s| ≤ 10⁵
 - **s** contains only letters, digits and punctuation
 `,
   starterCode: starterCode('Read the string s, then print it reversed'),

@@ -29,8 +29,8 @@ export default {
 Print **q** lines, the answer for each query in order.
 
 ### Constraints
-- 1 ≤ n, q ≤ 10^5
-- -10^9 ≤ every value ≤ 10^9
+- 1 ≤ n, q ≤ 10⁵
+- -10⁹ ≤ every value ≤ 10⁹
 `,
   starterCode: starterCode('Read the array and queries, then print each index or -1'),
   tests: [

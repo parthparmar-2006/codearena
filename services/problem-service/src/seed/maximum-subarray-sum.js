@@ -32,8 +32,8 @@ export default {
 Print one integer, the maximum subarray sum.
 
 ### Constraints
-- 1 ≤ n ≤ 10^5
-- -10^9 ≤ every value ≤ 10^9
+- 1 ≤ n ≤ 10⁵
+- -10⁹ ≤ every value ≤ 10⁹
 - The answer may not fit in a 32-bit integer.
 `,
   starterCode: starterCode('Read n and the array, then print the maximum subarray sum'),

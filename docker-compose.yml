@@ -89,6 +89,17 @@ services:
       submission-service:
         condition: service_healthy
 
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      problem-service:
+        condition: service_healthy
+      submission-service:
+        condition: service_healthy
+
 configs:
   db-init:
     content: |

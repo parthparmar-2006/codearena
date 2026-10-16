@@ -19,7 +19,7 @@ A single line with the bracket string **s**.
 Print **YES** if the string is balanced, otherwise print **NO**.
 
 ### Constraints
-- 1 ≤ |s| ≤ 10^5
+- 1 ≤ |s| ≤ 10⁵
 `,
   starterCode: starterCode('Read the bracket string, then print YES or NO'),
   tests: [

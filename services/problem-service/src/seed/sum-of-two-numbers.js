@@ -15,7 +15,7 @@ A single line with two integers **a** and **b**.
 Print one integer: **a + b**.
 
 ### Constraints
-- -10^9 ≤ a, b ≤ 10^9
+- -10⁹ ≤ a, b ≤ 10⁹
 `,
   starterCode: starterCode('Read a and b, then print a + b'),
   tests: [
