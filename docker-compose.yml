@@ -63,6 +63,32 @@ services:
       redis:
         condition: service_healthy
 
+  judge-service:
+    build: ./services/judge-service
+    restart: unless-stopped
+    environment:
+      HEALTH_PORT: 4003
+      REDIS_URL: redis://redis:6379
+      PROBLEM_SERVICE_URL: http://problem-service:4001
+      SUBMISSION_SERVICE_URL: http://submission-service:4002
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN:?set INTERNAL_TOKEN in .env}
+    read_only: true
+    tmpfs:
+      - /tmp:exec,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 768m
+    cpus: 1.0
+    depends_on:
+      redis:
+        condition: service_healthy
+      problem-service:
+        condition: service_healthy
+      submission-service:
+        condition: service_healthy
+
 configs:
   db-init:
     content: |
