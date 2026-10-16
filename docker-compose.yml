@@ -1,0 +1,73 @@
+name: codearena
+
+x-db-env: &db-env
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+  INTERNAL_TOKEN: ${INTERNAL_TOKEN:?set INTERNAL_TOKEN in .env}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    configs:
+      - source: db-init
+        target: /docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  problem-service:
+    build: ./services/problem-service
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      PORT: 4001
+      DB_NAME: problems_db
+    ports:
+      - "4001:4001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  submission-service:
+    build: ./services/submission-service
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      PORT: 4002
+      DB_NAME: submissions_db
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "4002:4002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+configs:
+  db-init:
+    content: |
+      CREATE DATABASE problems_db;
+      CREATE DATABASE submissions_db;
+
+volumes:
+  pgdata:
