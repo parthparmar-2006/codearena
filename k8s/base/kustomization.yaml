@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: codearena
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - postgres.yaml
+  - redis.yaml
+  - problem-service.yaml
+  - submission-service.yaml
+  - judge-service.yaml
+  - frontend.yaml
+  - ingress.yaml
+  - hpa.yaml
+  - networkpolicy.yaml

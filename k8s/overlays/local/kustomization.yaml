@@ -1,0 +1,22 @@
+# Uses the images built by `docker compose build` and imported into the local cluster.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+images:
+  - name: codearena-problem-service
+    newTag: latest
+  - name: codearena-submission-service
+    newTag: latest
+  - name: codearena-judge-service
+    newTag: latest
+  - name: codearena-frontend
+    newTag: latest
+patches:
+  - target:
+      kind: Deployment
+      name: problem-service|submission-service|judge-service|frontend
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/imagePullPolicy
+        value: IfNotPresent

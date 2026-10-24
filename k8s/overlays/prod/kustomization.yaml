@@ -1,0 +1,19 @@
+# Images come from GitHub Container Registry. CI replaces OWNER and the tag with
+# `kustomize edit set image` before deploying, so these values are only defaults.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+images:
+  - name: codearena-problem-service
+    newName: ghcr.io/OWNER/codearena-problem-service
+    newTag: latest
+  - name: codearena-submission-service
+    newName: ghcr.io/OWNER/codearena-submission-service
+    newTag: latest
+  - name: codearena-judge-service
+    newName: ghcr.io/OWNER/codearena-judge-service
+    newTag: latest
+  - name: codearena-frontend
+    newName: ghcr.io/OWNER/codearena-frontend
+    newTag: latest
