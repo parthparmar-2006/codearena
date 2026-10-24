@@ -1,9 +1,9 @@
-FROM node:20-bookworm-slim AS deps
+FROM node:25-bookworm-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
-FROM node:20-bookworm-slim
+FROM node:25-bookworm-slim
 # Patch OS packages, install the compiler tools, and remove npm, corepack and yarn (only node is needed).
 RUN apt-get update \
   && apt-get upgrade -y \
