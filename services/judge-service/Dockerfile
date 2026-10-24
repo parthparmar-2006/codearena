@@ -4,9 +4,13 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
 FROM node:20-bookworm-slim
+# Patch OS packages, install the compiler tools, and remove npm, corepack and yarn (only node is needed).
 RUN apt-get update \
+  && apt-get upgrade -y \
   && apt-get install -y --no-install-recommends g++ util-linux tini \
   && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
+    /usr/local/bin/yarn /usr/local/bin/yarnpkg /opt/yarn-* \
   && useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin judge
 ENV NODE_ENV=production HEALTH_PORT=4003 JOBS_DIR=/tmp/jobs
 WORKDIR /app

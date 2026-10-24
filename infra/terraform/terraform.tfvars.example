@@ -1,0 +1,10 @@
+# Copy to terraform.tfvars (gitignored) and fill in.
+region        = "ap-south-1"
+instance_type = "t3.small"
+
+# Paste the single line from ~/.ssh/codearena.pub
+public_key = "ssh-ed25519 AAAA...replace-me codearena"
+
+# GitHub-hosted runners use changing IPs, so the CI deploy needs 0.0.0.0/0.
+# Login is key-only. Use "<your-ip>/32" instead if you deploy only from your own machine.
+ssh_cidr = "0.0.0.0/0"

@@ -1,0 +1,5 @@
+# Accepted risks for the Trivy config scan. One ID per line, each with its reason.
+
+# Unrestricted egress: the EC2 host must reach the internet to install k3s, pull images from GHCR
+# and fetch OS updates. Submitted code is still blocked from the internet by the judge NetworkPolicy.
+AWS-0104
