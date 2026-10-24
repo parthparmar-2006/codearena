@@ -1,9 +1,9 @@
-FROM node:20-alpine AS deps
+FROM node:25-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
-FROM node:20-alpine
+FROM node:25-alpine
 # Patch OS packages, and remove npm, corepack and yarn: the app only needs the node binary.
 RUN apk upgrade --no-cache \
   && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
